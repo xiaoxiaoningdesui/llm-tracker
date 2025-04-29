@@ -1,0 +1,15 @@
+[
+	{
+		"entryPoints": [
+			"web"
+		],
+		"name": "baz@myprovider",
+		"provider": "myprovider",
+		"rule": "Host(`toto.bar`)",
+		"service": "foo-service@myprovider",
+		"status": "enabled",
+		"using": [
+			"web"
+		]
+	}
+]

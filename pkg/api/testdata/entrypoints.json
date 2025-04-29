@@ -1,0 +1,62 @@
+[
+	{
+		"address": ":80",
+		"forwardedHeaders": {
+			"insecure": true,
+			"trustedIPs": [
+				"192.168.1.3",
+				"192.168.1.4"
+			]
+		},
+		"http": {},
+		"name": "web",
+		"proxyProtocol": {
+			"insecure": true,
+			"trustedIPs": [
+				"192.168.1.1",
+				"192.168.1.2"
+			]
+		},
+		"transport": {
+			"lifeCycle": {
+				"graceTimeOut": "2ns",
+				"requestAcceptGraceTimeout": "1ns"
+			},
+			"respondingTimeouts": {
+				"idleTimeout": "5ns",
+				"readTimeout": "3ns",
+				"writeTimeout": "4ns"
+			}
+		}
+	},
+	{
+		"address": ":443",
+		"forwardedHeaders": {
+			"insecure": true,
+			"trustedIPs": [
+				"192.168.1.30",
+				"192.168.1.40"
+			]
+		},
+		"http": {},
+		"name": "websecure",
+		"proxyProtocol": {
+			"insecure": true,
+			"trustedIPs": [
+				"192.168.1.10",
+				"192.168.1.20"
+			]
+		},
+		"transport": {
+			"lifeCycle": {
+				"graceTimeOut": "20ns",
+				"requestAcceptGraceTimeout": "10ns"
+			},
+			"respondingTimeouts": {
+				"idleTimeout": "50ns",
+				"readTimeout": "30ns",
+				"writeTimeout": "40ns"
+			}
+		}
+	}
+]

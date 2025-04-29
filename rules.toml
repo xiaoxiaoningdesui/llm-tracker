@@ -1,0 +1,18 @@
+[http]
+  [http.routers]
+    [http.routers.ollama]
+      rule = "Path(`/api/chat`)"
+      service = "ollama"
+      entryPoints = ["web"]
+    [http.routers.onlinedeepseek]
+      rule = "Path(`/v1/chat/completions`) || Path(`/chat/completions`)"
+      service = "onlinedeepseek"
+      entryPoints = ["web"]
+
+  [http.services]
+    [http.services.ollama.loadBalancer]
+      [[http.services.ollama.loadBalancer.servers]]
+        url = "http://10.66.8.15:11434/"  # 替换为你的后端服务地址
+    [http.services.onlinedeepseek.loadBalancer]
+      [[http.services.onlinedeepseek.loadBalancer.servers]]
+        url = "https://api.deepseek.com"  # 替换为你的后端服务地址

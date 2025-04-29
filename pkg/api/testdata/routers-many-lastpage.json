@@ -1,0 +1,67 @@
+[
+	{
+		"entryPoints": [
+			"web"
+		],
+		"name": "bar14@myprovider",
+		"provider": "myprovider",
+		"rule": "Host(`foo.bar14`)",
+		"service": "foo-service@myprovider",
+		"status": "enabled",
+		"using": [
+			"web"
+		]
+	},
+	{
+		"entryPoints": [
+			"web"
+		],
+		"name": "bar15@myprovider",
+		"provider": "myprovider",
+		"rule": "Host(`foo.bar15`)",
+		"service": "foo-service@myprovider",
+		"status": "enabled",
+		"using": [
+			"web"
+		]
+	},
+	{
+		"entryPoints": [
+			"web"
+		],
+		"name": "bar16@myprovider",
+		"provider": "myprovider",
+		"rule": "Host(`foo.bar16`)",
+		"service": "foo-service@myprovider",
+		"status": "enabled",
+		"using": [
+			"web"
+		]
+	},
+	{
+		"entryPoints": [
+			"web"
+		],
+		"name": "bar17@myprovider",
+		"provider": "myprovider",
+		"rule": "Host(`foo.bar17`)",
+		"service": "foo-service@myprovider",
+		"status": "enabled",
+		"using": [
+			"web"
+		]
+	},
+	{
+		"entryPoints": [
+			"web"
+		],
+		"name": "bar18@myprovider",
+		"provider": "myprovider",
+		"rule": "Host(`foo.bar18`)",
+		"service": "foo-service@myprovider",
+		"status": "enabled",
+		"using": [
+			"web"
+		]
+	}
+]

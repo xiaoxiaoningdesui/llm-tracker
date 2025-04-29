@@ -1,0 +1,87 @@
+[
+	{
+		"loadBalancer": {
+			"passHostHeader": true,
+			"servers": [
+				{
+					"url": "http://127.0.0.1"
+				}
+			]
+		},
+		"name": "bar@myprovider",
+		"provider": "myprovider",
+		"serverStatus": {
+			"http://127.0.0.1": "UP"
+		},
+		"status": "enabled",
+		"type": "loadbalancer",
+		"usedBy": [
+			"foo@myprovider",
+			"test@myprovider"
+		]
+	},
+	{
+		"loadBalancer": {
+			"passHostHeader": true,
+			"servers": [
+				{
+					"url": "http://127.0.0.2"
+				}
+			]
+		},
+		"name": "baz@myprovider",
+		"provider": "myprovider",
+		"serverStatus": {
+			"http://127.0.0.2": "UP"
+		},
+		"status": "enabled",
+		"type": "loadbalancer",
+		"usedBy": [
+			"foo@myprovider"
+		]
+	},
+	{
+		"name": "canary@myprovider",
+		"provider": "myprovider",
+		"status": "enabled",
+		"type": "weighted",
+		"usedBy": [
+			"foo@myprovider"
+		],
+		"weighted": {
+			"sticky": {
+				"cookie": {
+					"httpOnly": true,
+					"name": "chocolat",
+					"secure": true
+				}
+			}
+		}
+	},
+	{
+		"mirroring": {
+			"mirrors": [
+				{
+					"name": "two@myprovider",
+					"percent": 10
+				},
+				{
+					"name": "three@myprovider",
+					"percent": 15
+				},
+				{
+					"name": "four@myprovider",
+					"percent": 80
+				}
+			],
+			"service": "one@myprovider"
+		},
+		"name": "mirror@myprovider",
+		"provider": "myprovider",
+		"status": "enabled",
+		"type": "mirroring",
+		"usedBy": [
+			"foo@myprovider"
+		]
+	}
+]

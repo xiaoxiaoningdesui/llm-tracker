@@ -1,0 +1,44 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[log]
+  level = "DEBUG"
+
+[entryPoints]
+  [entryPoints.websecure]
+    address = ":4443"
+
+[api]
+  insecure = true
+
+[providers.file]
+  filename = "{{ .SelfFilename }}"
+
+## dynamic configuration ##
+
+[http.routers]
+  [http.routers.router1]
+    rule = "HostRegexp(`{subdomain:[a-z1-9-]+}.snitest.com`)"
+    service = "service1"
+    [http.routers.router1.tls]
+
+  [http.routers.router2]
+    rule = "HostRegexp(`{subdomain:[a-z1-9-]+}.www.snitest.com`)"
+    service = "service1"
+    [http.routers.router2.tls]
+
+[http.services]
+  [http.services.service1]
+    [http.services.service1.loadBalancer]
+      [[http.services.service1.loadBalancer.servers]]
+        url = "http://127.0.0.1:9010"
+
+[[tls.certificates]]
+  certFile = "fixtures/https/uppercase_wildcard.www.snitest.com.cert"
+  keyFile = "fixtures/https/uppercase_wildcard.www.snitest.com.key"
+
+[tls.stores]
+  [tls.stores.default.defaultCertificate]
+    certFile = "fixtures/https/wildcard.snitest.com.cert"
+    keyFile = "fixtures/https/wildcard.snitest.com.key"

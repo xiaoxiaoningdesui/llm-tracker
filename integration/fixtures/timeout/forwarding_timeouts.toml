@@ -1,0 +1,45 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[log]
+  level = "DEBUG"
+
+[serversTransport.forwardingTimeouts]
+  dialTimeout = "300ms"
+  responseHeaderTimeout = "300ms"
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":8000"
+
+[accessLog]
+  format = "json"
+
+[api]
+  insecure = true
+
+[providers.file]
+  filename = "{{ .SelfFilename }}"
+
+## dynamic configuration ##
+
+[http.routers]
+  [http.routers.router1]
+    service = "service1"
+    rule = "Path(`/dialTimeout`)"
+
+  [http.routers.router2]
+    service = "service2"
+    rule = "Path(`/responseHeaderTimeout`)"
+
+[http.services]
+  [http.services.service1]
+    [http.services.service1.loadBalancer]
+      [[http.services.service1.loadBalancer.servers]]
+        url = "http://50.255.255.1"
+
+  [http.services.service2]
+    [http.services.service2.loadBalancer]
+      [[http.services.service2.loadBalancer.servers]]
+        url = "http://{{.TimeoutEndpoint}}:9000"

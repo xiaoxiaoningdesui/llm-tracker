@@ -1,0 +1,111 @@
+{
+	"routers": {
+		"bar@myprovider": {
+			"entryPoints": [
+				"web"
+			],
+			"middlewares": [
+				"auth",
+				"addPrefixTest@anotherprovider"
+			],
+			"service": "foo-service@myprovider",
+			"rule": "Host(`foo.bar`)",
+			"status": "enabled"
+		},
+		"test@myprovider": {
+			"entryPoints": [
+				"web"
+			],
+			"middlewares": [
+				"addPrefixTest",
+				"auth"
+			],
+			"service": "foo-service@myprovider",
+			"rule": "Host(`foo.bar.other`)",
+			"status": "enabled"
+		}
+	},
+	"middlewares": {
+		"addPrefixTest@anotherprovider": {
+			"addPrefix": {
+				"prefix": "/toto"
+			},
+			"status": "enabled",
+			"usedBy": [
+				"bar@myprovider"
+			]
+		},
+		"addPrefixTest@myprovider": {
+			"addPrefix": {
+				"prefix": "/titi"
+			},
+			"status": "enabled",
+			"usedBy": [
+				"test@myprovider"
+			]
+		},
+		"auth@myprovider": {
+			"basicAuth": {
+				"users": [
+					"admin:admin"
+				]
+			},
+			"status": "enabled",
+			"usedBy": [
+				"bar@myprovider",
+				"test@myprovider"
+			]
+		}
+	},
+	"services": {
+		"foo-service@myprovider": {
+			"loadBalancer": {
+				"servers": [
+					{
+						"url": "http://127.0.0.1"
+					}
+				],
+				"passHostHeader": true
+			},
+			"status": "enabled",
+			"usedBy": [
+				"bar@myprovider",
+				"test@myprovider"
+			]
+		}
+	},
+	"tcpRouters": {
+		"tcpbar@myprovider": {
+			"entryPoints": [
+				"web"
+			],
+			"service": "tcpfoo-service@myprovider",
+			"rule": "HostSNI(`foo.bar`)",
+			"status": "enabled"
+		},
+		"tcptest@myprovider": {
+			"entryPoints": [
+				"web"
+			],
+			"service": "tcpfoo-service@myprovider",
+			"rule": "HostSNI(`foo.bar.other`)",
+			"status": "enabled"
+		}
+	},
+	"tcpServices": {
+		"tcpfoo-service@myprovider": {
+			"loadBalancer": {
+				"servers": [
+					{
+						"address": "127.0.0.1"
+					}
+				]
+			},
+			"status": "enabled",
+			"usedBy": [
+				"tcpbar@myprovider",
+				"tcptest@myprovider"
+			]
+		}
+	}
+}

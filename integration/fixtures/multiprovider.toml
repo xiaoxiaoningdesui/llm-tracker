@@ -1,0 +1,31 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[log]
+  level = "DEBUG"
+
+[api]
+  insecure = true
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":8000"
+
+[providers]
+  [providers.rest]
+    insecure = true
+
+  [providers.file]
+    filename = "{{ .SelfFilename }}"
+
+## dynamic configuration ##
+
+[http.services]
+    [http.services.service.loadBalancer]
+      [[http.services.service.loadBalancer.servers]]
+        url = "{{.Server}}"
+
+[http.middlewares]
+  [http.middlewares.customheader.headers.customRequestHeaders]
+    X-Custom="CustomValue"

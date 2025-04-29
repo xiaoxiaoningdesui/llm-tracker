@@ -1,0 +1,48 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[log]
+  level = "DEBUG"
+
+[entryPoints]
+  [entryPoints.websecure]
+    address = ":4443"
+
+[api]
+  insecure = true
+
+[providers.file]
+  filename = "{{ .SelfFilename }}"
+
+## dynamic configuration ##
+
+[http.routers]
+  [http.routers.router1]
+    service = "service1"
+    rule = "Host(`snitest.com`)"
+    [http.routers.router1.tls]
+
+  [http.routers.router2]
+    service = "service2"
+    rule = "Host(`snitest.org`)"
+    [http.routers.router2.tls]
+
+[http.services]
+  [http.services.service1]
+    [http.services.service1.loadBalancer]
+      [[http.services.service1.loadBalancer.servers]]
+        url = "http://127.0.0.1:9010"
+
+  [http.services.service2]
+    [http.services.service2.loadBalancer]
+      [[http.services.service2.loadBalancer.servers]]
+        url = "http://127.0.0.1:9020"
+
+[[tls.certificates]]
+  certFile = "fixtures/https/snitest.com.cert"
+  keyFile = "fixtures/https/snitest.com.key"
+
+[[tls.certificates]]
+  certFile = "fixtures/https/snitest.org.cert"
+  keyFile = "fixtures/https/snitest.org.key"

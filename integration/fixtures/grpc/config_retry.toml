@@ -1,0 +1,44 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[log]
+  level = "DEBUG"
+
+[serversTransport]
+  rootCAs = [ """{{ .CertContent }}""" ]
+
+[entryPoints]
+  [entryPoints.websecure]
+    address = ":4443"
+
+[api]
+  insecure = true
+
+[providers.file]
+  filename = "{{ .SelfFilename }}"
+
+## dynamic configuration ##
+
+[http.routers]
+  [http.routers.router1]
+    rule = "Host(`127.0.0.1`)"
+    service = "service1"
+    middlewares = ["retryer"]
+    [http.routers.router1.tls]
+
+[http.middlewares]
+  [http.middlewares.retryer.retry]
+    attempts = 2
+
+[http.services]
+  [http.services.service1.loadBalancer]
+  [http.services.service1.loadBalancer.responseForwarding]
+    flushInterval = "1ms"
+    [[http.services.service1.loadBalancer.servers]]
+      url = "https://127.0.0.1:{{ .GRPCServerPort }}"
+
+[tls.stores]
+  [tls.stores.default.defaultCertificate]
+    certFile = """{{ .CertContent }}"""
+    keyFile  = """{{ .KeyContent }}"""

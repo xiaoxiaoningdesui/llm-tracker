@@ -1,0 +1,9 @@
+[http.routers]
+  [http.routers.router1]
+    rule = "Path(`/test1`)"
+    service = "service1"
+
+[http.services]
+  [http.services.service1.loadBalancer]
+    [[http.services.service1.loadBalancer.servers]]
+      url = "http://172.17.0.2:80"

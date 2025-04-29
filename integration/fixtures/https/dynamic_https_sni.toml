@@ -1,0 +1,21 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[log]
+  level = "DEBUG"
+
+[entryPoints]
+  [entryPoints.websecure]
+     address = ":4443"
+
+  [entryPoints.https02]
+     address = ":8443"
+
+[api]
+  insecure = true
+
+[providers]
+  [providers.file]
+    fileName = "{{.DynamicConfFileName}}"
+    watch = true

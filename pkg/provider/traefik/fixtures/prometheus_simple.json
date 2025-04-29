@@ -1,0 +1,20 @@
+{
+  "http": {
+    "routers": {
+      "prometheus": {
+        "entryPoints": [
+          "test"
+        ],
+        "service": "prometheus@internal",
+        "rule": "PathPrefix(`/metrics`)",
+        "priority": 9223372036854775807
+      }
+    },
+    "services": {
+      "noop": {},
+      "prometheus": {}
+    }
+  },
+  "tcp": {},
+  "tls": {}
+}

@@ -1,0 +1,38 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[log]
+  level = "DEBUG"
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":8000"
+
+[api]
+  insecure = true
+
+[providers.file]
+  filename = "{{ .SelfFilename }}"
+
+## dynamic configuration ##
+
+[http.routers]
+  [http.routers.router1]
+    entryPoints = ["web"]
+    service = "service1"
+    rule = "PathPrefix(`/whoami`)"
+
+  [http.routers.router2]
+    entryPoints = ["traefik"]
+    service = "service2"
+    rule = "PathPrefix(`/whoami`)"
+
+[http.services]
+  [http.services.service1.loadBalancer]
+    [[http.services.service1.loadBalancer.servers]]
+      url = "{{ .Server1 }}"
+
+  [http.services.service2.loadBalancer]
+    [[http.services.service2.loadBalancer.servers]]
+      url = "{{ .Server2 }}"

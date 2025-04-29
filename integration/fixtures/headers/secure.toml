@@ -1,0 +1,42 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[api]
+  insecure = true
+
+[log]
+  level = "DEBUG"
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":8000"
+
+[providers.file]
+  filename = "{{ .SelfFilename }}"
+
+## dynamic configuration ##
+
+[http.routers]
+  [http.routers.router1]
+    rule = "Host(`test.localhost`)"
+    middlewares = ["secure"]
+    service = "service1"
+
+  [http.routers.router2]
+    rule = "Host(`test2.localhost`)"
+    service = "service1"
+
+  [http.routers.router3]
+    rule = "Host(`internal.localhost`)"
+    middlewares = ["secure"]
+    service = "api@internal"
+
+[http.middlewares]
+  [http.middlewares.secure.headers]
+    permissionsPolicy = "microphone=(),"
+
+[http.services]
+  [http.services.service1.loadBalancer]
+    [[http.services.service1.loadBalancer.servers]]
+      url = "http://127.0.0.1:9000"

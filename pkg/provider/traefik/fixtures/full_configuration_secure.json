@@ -1,0 +1,14 @@
+{
+  "http": {
+    "services": {
+      "api": {},
+      "dashboard": {},
+      "noop": {},
+      "ping": {},
+      "prometheus": {},
+      "rest": {}
+    }
+  },
+  "tcp": {},
+  "tls": {}
+}

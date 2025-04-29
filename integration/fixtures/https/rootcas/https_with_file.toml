@@ -1,0 +1,34 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[log]
+  level = "DEBUG"
+
+[serversTransport]
+  # Use certificate in net/internal/testcert.go
+  rootCAs =  [ "fixtures/https/rootcas/local.crt"]
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":8081"
+
+[api]
+  insecure = true
+
+[providers.file]
+  filename = "{{ .SelfFilename }}"
+
+## dynamic configuration ##
+
+[http.routers]
+  [http.routers.router1]
+    service = "service1"
+    rule = "Path(`/ping`)"
+
+[http.services]
+  [http.services.service1]
+    [http.services.service1.loadBalancer]
+
+      [[http.services.service1.loadBalancer.servers]]
+        url = "{{ .BackendHost }}"

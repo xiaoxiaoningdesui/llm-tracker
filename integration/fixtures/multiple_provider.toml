@@ -1,0 +1,33 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[log]
+  level = "DEBUG"
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":8000"
+
+[api]
+  insecure = true
+
+[providers]
+  [providers.docker]
+    watch = true
+    exposedByDefault = false
+
+  [providers.file]
+    filename = "{{ .SelfFilename }}"
+
+## dynamic configuration ##
+
+[http.routers]
+  [http.routers.router-1]
+    service = "service-test"
+    rule = "PathPrefix(`/file`)"
+
+[http.services]
+  [http.services.service-test.loadBalancer]
+    [[http.services.service-test.loadBalancer.servers]]
+      url = "http://{{ .IP }}"

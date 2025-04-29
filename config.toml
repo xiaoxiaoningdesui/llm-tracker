@@ -1,0 +1,14 @@
+[entryPoints]
+  [entryPoints.web]
+    address = ":1234"
+
+  [entryPoints.websecure]
+    address = ":443"
+
+[log]
+  level = "INFO"  # 设置日志级别
+  filePath = "./1.log"  # 日志文件路径
+  format = "common"
+
+[providers.file]
+  filename = "rules.toml"
